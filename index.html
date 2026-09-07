@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ProjectForge — Build Smarter</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Project<span>Forge</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#generator">Build</a>
+        </div>
+
+        <button class="nav-button" onclick="scrollToGenerator()">
+            Start Building
+        </button>
+
+    </nav>
+
+
+    <!-- Hero -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                ✦ AI-powered project planning
+            </div>
+
+            <h1>
+                Turn your idea into a
+                <span>real project.</span>
+            </h1>
+
+            <p>
+                ProjectForge transforms your idea into a complete
+                development blueprint — from technology stack to
+                architecture and roadmap.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button class="primary-button" onclick="scrollToGenerator()">
+                    Start Building →
+                </button>
+
+                <button class="secondary-button" onclick="scrollToFeatures()">
+                    Explore Features
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+
+    <section class="features" id="features">
+
+        <div class="section-heading">
+
+            <p class="section-label">
+                WHAT YOU GET
+            </p>
+
+            <h2>
+                From idea to execution.
+            </h2>
+
+            <p>
+                Everything you need to turn a rough idea into
+                a structured development plan.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Project Blueprint
+                </h3>
+
+                <p>
+                    Transform your idea into a structured
+                    project plan with clear objectives.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ◈
+                </div>
+
+                <h3>
+                    Smart Tech Stack
+                </h3>
+
+                <p>
+                    Get technology recommendations based
+                    on your project's requirements.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ◎
+                </div>
+
+                <h3>
+                    Architecture
+                </h3>
+
+                <p>
+                    Understand how your frontend, backend,
+                    database and AI components connect.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Development Roadmap
+                </h3>
+
+                <p>
+                    Break your project into manageable
+                    development milestones.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Generator -->
+
+    <section class="generator" id="generator">
+
+        <div class="generator-container">
+
+            <div class="generator-heading">
+
+                <p class="section-label">
+                    PROJECT GENERATOR
+                </p>
+
+                <h2>
+                    What's your idea?
+                </h2>
+
+                <p>
+                    Describe what you want to build and
+                    we'll turn it into a development blueprint.
+                </p>
+
+            </div>
+
+
+            <div class="input-box">
+
+                <textarea
+                    id="projectIdea"
+                    placeholder="Example: I want to build an AI-powered attendance system..."
+                ></textarea>
+
+                <div class="input-footer">
+
+                    <span>
+                        Describe your idea in a few sentences.
+                    </span>
+
+                    <button onclick="generateProject()">
+                        Generate Blueprint →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Blueprint -->
+
+    <section class="blueprint" id="blueprint">
+
+        <div class="blueprint-container">
+
+            <div class="blueprint-header">
+
+                <div>
+
+                    <p class="section-label">
+                        YOUR BLUEPRINT
+                    </p>
+
+                    <h2 id="projectTitle">
+                        Your project will appear here
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="blueprint-grid">
+
+
+                <!-- Project Overview -->
+
+                <div class="blueprint-card">
+
+                    <h3>
+                        Project Overview
+                    </h3>
+
+                    <p id="overview">
+                        Generate a project to see the overview.
+                    </p>
+
+                </div>
+                <div class="blueprint-card complexity-card">
+
+    <div class="card-label">PROJECT COMPLEXITY</div>
+
+    <div class="complexity-score">
+        <span id="complexityScore">50</span>
+        <small>/100</small>
+    </div>
+  <div class="complexity-bar">
+    <div id="complexityProgress"></div>
+</div>
+
+    <div id="complexityLevel" class="complexity-level">
+        Intermediate
+    </div>
+
+    <p id="estimatedTime">
+        Estimated development time: 1–2 weeks
+    </p>
+
+</div>
+
+
+                <!-- Recommended Stack -->
+
+                <div class="blueprint-card">
+
+                    <h3>
+                        Recommended Stack
+                    </h3>
+
+                    <div id="techStack" class="stack-list">
+
+                        <span>Frontend</span>
+                        <span>Backend</span>
+                        <span>Database</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Core Features -->
+
+                <div class="blueprint-card">
+
+                    <h3>
+                        Core Features
+                    </h3>
+
+                    <div id="featuresList" class="feature-list">
+
+                        <span>
+                            Features will appear here
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- System Architecture -->
+
+                <div class="blueprint-card">
+
+                    <h3>
+                        System Architecture
+                    </h3>
+
+                    <div id="architecture" class="architecture">
+
+    <div class="architecture-box">
+        User
+    </div>
+
+    <div class="arrow">
+        ↓
+    </div>
+
+    <div class="architecture-box">
+        Frontend
+    </div>
+
+    <div class="arrow">
+        ↓
+    </div>
+
+    <div class="architecture-box">
+        Backend API
+    </div>
+
+    <div class="arrow">
+        ↓
+    </div>
+
+    <div class="architecture-box">
+        Database
+    </div>
+
+</div>
+
+                </div>
+
+
+                <!-- Development Roadmap -->
+
+                <div class="blueprint-card full-width">
+
+                    <h3>
+                        Development Roadmap
+                    </h3>
+
+                    <div class="roadmap">
+
+                        <div class="roadmap-item">
+                            <span>01</span>
+                            Project Setup
+                        </div>
+
+                        <div class="roadmap-item">
+                            <span>02</span>
+                            Core Features
+                        </div>
+
+                        <div class="roadmap-item">
+                            <span>03</span>
+                            Backend Integration
+                        </div>
+
+                        <div class="roadmap-item">
+                            <span>04</span>
+                            Testing & Deployment
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Development Tasks -->
+
+                <div class="blueprint-card full-width">
+
+                    <h3>
+                        Development Tasks
+                    </h3>
+
+                    <div id="tasksList" class="tasks-list">
+
+                        <div class="task">
+                            <span class="task-number">
+                                01
+                            </span>
+
+                            Project setup
+                        </div>
+
+                        <div class="task">
+                            <span class="task-number">
+                                02
+                            </span>
+
+                            Build core features
+                        </div>
+
+                        <div class="task">
+                            <span class="task-number">
+                                03
+                            </span>
+
+                            Backend integration
+                        </div>
+
+                        <div class="task">
+                            <span class="task-number">
+                                04
+                            </span>
+
+                            Testing and deployment
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="logo">
+            Project<span>Forge</span>
+        </div>
+
+        <p>
+            Build smarter. Ship faster.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

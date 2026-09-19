@@ -6,32 +6,64 @@
 
     <title>ProjectForge — Build Smarter</title>
 
+    <meta name="description" content="ProjectForge turns raw project ideas into structured, build-ready blueprints with a smart tech stack, architecture, features and roadmap.">
+    <meta name="theme-color" content="#05060f">
+
+    <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"%3E%3Crect width="32" height="32" rx="8" fill="%230b0d18"/%3E%3Cg transform="translate(16 16)"%3E%3Ccircle r="10" fill="none" stroke="%235b8cff" stroke-width="3"/%3E%3Ccircle r="10" fill="none" stroke="%23d946ef" stroke-width="3" stroke-dasharray="12 51" stroke-linecap="round" transform="rotate(-60)"/%3E%3Ccircle r="3.2" fill="%23e879f9"/%3E%3C/g%3E%3C/svg%3E'>
+
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
+    <a class="skip-link" href="#build">Skip to content</a>
+
+    <!-- Ambient background -->
+
+    <div class="bg-layer" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="bg-grid"></div>
+        <div class="bg-sheen"></div>
+    </div>
+
+
     <!-- Navigation -->
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
 
-        <div class="logo">
+        <a class="logo" href="#build">
             Project<span>Forge</span>
-        </div>
+        </a>
 
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How it works</a>
-            <a href="#generator">Build</a>
-        </div>
+        <ul class="nav-links" id="navMenu">
+            <li><a href="#features" data-spy="features">Features</a></li>
+            <li><a href="#how-it-works" data-spy="how-it-works">How it works</a></li>
+            <li><a href="#build" data-spy="build">Build</a></li>
+            <li>
+                <a href="https://github.com/" target="_blank" rel="noopener"
+                   aria-label="ProjectForge on GitHub (opens in a new tab)">
+                    GitHub
+                </a>
+            </li>
+            <li class="nav-cta-item">
+                <button class="btn btn-primary nav-cta" type="button" onclick="scrollToGenerator()">
+                    Generate
+                </button>
+            </li>
+        </ul>
 
-        <button class="nav-button" onclick="scrollToGenerator()">
-            Start Building
+        <button class="nav-toggle" id="navToggle" type="button"
+                aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
         </button>
 
     </nav>
@@ -39,34 +71,157 @@
 
     <!-- Hero -->
 
-    <section class="hero">
+    <section class="hero" id="build">
 
-        <div class="hero-content">
+        <div class="hero-glow"></div>
 
-            <div class="badge">
-                ✦ AI-powered project planning
+        <div class="hero-particles" aria-hidden="true">
+            <span class="p" style="left: 8%;  top: 68%; --d: 0s;   --s: 5px; --a: #5b8cff;"></span>
+            <span class="p" style="left: 16%; top: 30%; --d: 2.2s; --s: 4px; --a: #8b5cf6;"></span>
+            <span class="p" style="left: 26%; top: 74%; --d: 1.4s; --s: 6px; --a: #22d3ee;"></span>
+            <span class="p" style="left: 38%; top: 22%; --d: 3.4s; --s: 4px; --a: #e879f9;"></span>
+            <span class="p" style="left: 47%; top: 62%; --d: 0.8s; --s: 5px; --a: #5b8cff;"></span>
+            <span class="p" style="left: 58%; top: 34%; --d: 2.6s; --s: 4px; --a: #8b5cf6;"></span>
+            <span class="p" style="left: 68%; top: 76%; --d: 1.1s; --s: 6px; --a: #e879f9;"></span>
+            <span class="p" style="left: 78%; top: 26%; --d: 4s;   --s: 4px; --a: #22d3ee;"></span>
+            <span class="p" style="left: 88%; top: 60%; --d: 2.9s; --s: 5px; --a: #5b8cff;"></span>
+            <span class="p" style="left: 94%; top: 40%; --d: 1.8s; --s: 4px; --a: #a78bfa;"></span>
+        </div>
+
+        <div class="container hero-inner">
+
+            <div class="hero-copy">
+
+                <div class="badge reveal">
+                    <span class="badge-dot"></span> AI-powered project planning
+                </div>
+
+                <h1 class="reveal">
+                    Build <span class="grad">Smarter.</span>
+                </h1>
+
+                <p class="hero-sub reveal">
+                    Turn your ideas into structured, build-ready project blueprints.
+                </p>
+
+                <div class="idea-box reveal" id="ideaBox">
+
+                    <textarea
+                        id="projectIdea"
+                        class="idea-input"
+                        rows="3"
+                        maxlength="2000"
+                        aria-describedby="ideaError"
+                        placeholder="Describe your project idea... e.g. An AI-powered attendance system with face recognition"
+                    ></textarea>
+
+                    <div class="idea-error" id="ideaError" role="alert" aria-live="assertive">
+                        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M10 2c1.1 0 2.1.6 2.6 1.6l6 10.6c.5.9 0 1.8-1 1.8H2.4c-1 0-1.5-.9-1-1.8l6-10.6A3 3 0 0 1 10 2Z" fill="currentColor"/>
+                            <path d="M10 7v4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                            <circle cx="10" cy="13.4" r="1.05" fill="#fff"/>
+                        </svg>
+                        <span id="ideaErrorText"></span>
+                    </div>
+
+                    <div class="suggestions" aria-label="Example project ideas">
+                        <span class="suggestions-label">Try:</span>
+
+                        <button type="button" class="chip" data-idea="AI attendance system with face recognition">
+                            AI attendance
+                        </button>
+                        <button type="button" class="chip" data-idea="Online store with cart and checkout">
+                            Online store
+                        </button>
+                        <button type="button" class="chip" data-idea="Healthcare appointment booking platform">
+                            Healthcare booking
+                        </button>
+                        <button type="button" class="chip" data-idea="Student learning tracker with progress">
+                            Learning tracker
+                        </button>
+                    </div>
+
+                    <div class="idea-footer">
+
+                        <div class="idea-meta">
+                            <span class="idea-hint">
+                                Ctrl/⌘ + Enter to generate
+                            </span>
+                            <span class="idea-count" id="ideaCount" aria-live="polite">0 / 2000</span>
+                        </div>
+
+                        <button id="generateBtn" class="btn btn-primary generate-btn" type="button" onclick="generateProject()">
+                            <span class="btn-label">Generate Blueprint <span class="btn-arrow">→</span></span>
+                            <span class="btn-spinner" aria-hidden="true"></span>
+                        </button>
+
+                    </div>
+
+                    <div class="generate-status" id="generateStatus" aria-live="polite"></div>
+
+                    <div class="generate-track">
+                        <div id="generationProgress"></div>
+                    </div>
+
+                </div>
+
+                <div class="hero-stats reveal">
+                    <div><strong>6</strong><span>blueprint types</span></div>
+                    <div><strong>4</strong><span>planning stages</span></div>
+                    <div><strong>∞</strong><span>project ideas</span></div>
+                </div>
+
             </div>
 
-            <h1>
-                Turn your idea into a
-                <span>real project.</span>
-            </h1>
 
-            <p>
-                ProjectForge transforms your idea into a complete
-                development blueprint — from technology stack to
-                architecture and roadmap.
-            </p>
+            <!-- 3D architecture object -->
 
-            <div class="hero-buttons">
+            <div class="arch-3d reveal" aria-hidden="true">
 
-                <button class="primary-button" onclick="scrollToGenerator()">
-                    Start Building →
-                </button>
+                <div class="arch-3d-stage">
 
-                <button class="secondary-button" onclick="scrollToFeatures()">
-                    Explore Features
-                </button>
+                    <div class="arch-orbit orbit-outer"></div>
+                    <div class="arch-orbit orbit-inner"></div>
+
+                    <svg class="arch-lines" viewBox="0 0 320 420" fill="none">
+                        <path class="l l1" d="M160 44 C160 100, 84 122, 82 164"/>
+                        <path class="l l2" d="M160 44 C160 100, 236 122, 238 164"/>
+                        <path class="l l3" d="M82 206 C82 282, 132 336, 150 378"/>
+                        <path class="l l4" d="M238 206 C238 282, 188 336, 170 378"/>
+                    </svg>
+
+                    <div class="node node-ai">
+                        <span class="n-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        </span>
+                        AI
+                    </div>
+
+                    <div class="node node-fe">
+                        <span class="n-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10.5h17M7 8h.01M10 8h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 20.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        </span>
+                        Frontend
+                    </div>
+
+                    <div class="node node-be">
+                        <span class="n-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10.5h17M12 10.5v9" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="7.6" r="1" fill="currentColor"/><circle cx="12" cy="7.6" r="1" fill="currentColor"/></svg>
+                        </span>
+                        Backend
+                    </div>
+
+                    <div class="node node-db">
+                        <span class="n-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5.5" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 5.5v13c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-13" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3" stroke="currentColor" stroke-width="1.8"/></svg>
+                        </span>
+                        Database
+                    </div>
+
+                    <span class="float-chip chip-1">Ship it</span>
+                    <span class="float-chip chip-2">MVP ready</span>
+
+                </div>
 
             </div>
 
@@ -79,143 +234,69 @@
 
     <section class="features" id="features">
 
-        <div class="section-heading">
+        <div class="container">
 
-            <p class="section-label">
-                WHAT YOU GET
-            </p>
-
-            <h2>
-                From idea to execution.
-            </h2>
-
-            <p>
-                Everything you need to turn a rough idea into
-                a structured development plan.
-            </p>
-
-        </div>
-
-
-        <div class="feature-grid">
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ✦
-                </div>
-
-                <h3>
-                    Project Blueprint
-                </h3>
-
-                <p>
-                    Transform your idea into a structured
-                    project plan with clear objectives.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ◈
-                </div>
-
-                <h3>
-                    Smart Tech Stack
-                </h3>
-
-                <p>
-                    Get technology recommendations based
-                    on your project's requirements.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ◎
-                </div>
-
-                <h3>
-                    Architecture
-                </h3>
-
-                <p>
-                    Understand how your frontend, backend,
-                    database and AI components connect.
-                </p>
-
-            </div>
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ✓
-                </div>
-
-                <h3>
-                    Development Roadmap
-                </h3>
-
-                <p>
-                    Break your project into manageable
-                    development milestones.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Generator -->
-
-    <section class="generator" id="generator">
-
-        <div class="generator-container">
-
-            <div class="generator-heading">
+            <div class="section-heading reveal">
 
                 <p class="section-label">
-                    PROJECT GENERATOR
+                    CAPABILITIES
                 </p>
 
                 <h2>
-                    What's your idea?
+                    From idea to execution.
                 </h2>
 
                 <p>
-                    Describe what you want to build and
-                    we'll turn it into a development blueprint.
+                    Everything you need to turn a rough idea into
+                    a structured development plan.
                 </p>
 
             </div>
 
+            <div class="feature-grid">
 
-            <div class="input-box">
+                <div class="feature-card tilt reveal" style="--acc: #5b8cff">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4.5 13.5H11L9.5 22 19 10.5h-6.5L13 2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Project Blueprint</h3>
+                    <p>
+                        Transform your idea into a structured
+                        project plan with clear objectives.
+                    </p>
+                </div>
 
-                <textarea
-                    id="projectIdea"
-                    placeholder="Example: I want to build an AI-powered attendance system..."
-                ></textarea>
+                <div class="feature-card tilt reveal" style="--acc: #8b5cf6">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M7 7h10M7 12h10M7 17h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Smart Tech Stack</h3>
+                    <p>
+                        Get technology recommendations based
+                        on your project's requirements.
+                    </p>
+                </div>
 
-                <div class="input-footer">
+                <div class="feature-card tilt reveal" style="--acc: #22d3ee">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 19 7v10l-7 3.5L5 17V7l7-3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.4" stroke="currentColor" stroke-width="1.7"/></svg>
+                    </div>
+                    <h3>Architecture</h3>
+                    <p>
+                        Understand how your frontend, backend,
+                        database and AI components connect.
+                    </p>
+                </div>
 
-                    <span>
-                        Describe your idea in a few sentences.
-                    </span>
-
-                    <button onclick="generateProject()">
-                        Generate Blueprint →
-                    </button>
-
+                <div class="feature-card tilt reveal" style="--acc: #e879f9">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 19.5v-7M9.8 19.5V9M15 19.5v-10M20.2 19.5V4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Development Roadmap</h3>
+                    <p>
+                        Break your project into manageable
+                        development milestones.
+                    </p>
                 </div>
 
             </div>
@@ -225,75 +306,211 @@
     </section>
 
 
-    <!-- Blueprint -->
+    <!-- How it works -->
 
-    <section class="blueprint" id="blueprint">
+    <section class="steps" id="how-it-works">
 
-        <div class="blueprint-container">
+        <div class="container">
 
-            <div class="blueprint-header">
+            <div class="section-heading reveal">
 
-                <div>
+                <p class="section-label">
+                    WORKFLOW
+                </p>
 
-                    <p class="section-label">
-                        YOUR BLUEPRINT
-                    </p>
+                <h2>
+                    How it works.
+                </h2>
 
-                    <h2 id="projectTitle">
-                        Your project will appear here
-                    </h2>
+                <p>
+                    Four stages from a raw thought to a build-ready blueprint.
+                </p>
 
+            </div>
+
+            <div class="step-grid">
+
+                <div class="step-card tilt reveal" style="--acc: #5b8cff">
+                    <div class="step-inner">
+                        <span class="step-num">01</span>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M9 18V6l10 6-10 6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                        </div>
+                        <h3>IDEA</h3>
+                        <p>
+                            Describe your project in plain language — ProjectForge parses the core concept.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-connector" aria-hidden="true"></div>
+
+                <div class="step-card tilt reveal" style="--acc: #8b5cf6">
+                    <div class="step-inner">
+                        <span class="step-num">02</span>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                        </div>
+                        <h3>AI ANALYSIS</h3>
+                        <p>
+                            The engine detects your domain, picks a stack and scores the build complexity.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-connector" aria-hidden="true"></div>
+
+                <div class="step-card tilt reveal" style="--acc: #22d3ee">
+                    <div class="step-inner">
+                        <span class="step-num">03</span>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 10.5h17M7 8h.01M10 8h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                        </div>
+                        <h3>BLUEPRINT</h3>
+                        <p>
+                            Get a structured plan with stack, architecture, features and tasks.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-connector" aria-hidden="true"></div>
+
+                <div class="step-card tilt reveal" style="--acc: #e879f9">
+                    <div class="step-inner">
+                        <span class="step-num">04</span>
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 19 7v10l-7 3.5L5 17V7l7-3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                        </div>
+                        <h3>BUILD</h3>
+                        <p>
+                            Follow the roadmap and ship your project with confidence.
+                        </p>
+                    </div>
                 </div>
 
             </div>
 
+        </div>
 
-            <div class="blueprint-grid">
+    </section>
 
 
-                <!-- Project Overview -->
+    <!-- Blueprint dashboard -->
 
-                <div class="blueprint-card">
+    <section class="blueprint" id="blueprint">
 
-                    <h3>
-                        Project Overview
-                    </h3>
+        <div class="container blueprint-container">
 
-                    <p id="overview">
+            <div class="blueprint-header reveal">
+
+                <div class="blueprint-heading">
+                    <p class="section-label">
+                        YOUR BLUEPRINT
+                    </p>
+                    <h2 id="projectTitle">
+                        Your project will appear here
+                    </h2>
+                    <p class="blueprint-subtitle" id="projectSubtitle" aria-live="polite"></p>
+                </div>
+
+                <div class="blueprint-actions">
+                    <span class="header-pill pill-muted" id="domainPill">
+                        <span class="pill-dot pill-dot-plain"></span> General
+                    </span>
+                    <span class="header-pill" id="statePill">
+                        <span class="pill-dot"></span> Ready
+                    </span>
+                    <button class="btn btn-ghost copy-btn" type="button" id="copyBtn" onclick="copyBlueprint()"
+                            aria-label="Copy blueprint summary">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.7"/></svg>
+                        Copy blueprint
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="dash-grid">
+
+                <!-- Overview -->
+
+                <div class="dash-card span-2" style="--i: 0; --acc: #5b8cff">
+
+                    <div class="dash-head">
+                        <div class="dash-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.7"/></svg>
+                        </div>
+                        <p class="dash-label">PROJECT OVERVIEW</p>
+                    </div>
+
+                    <p id="overview" class="dash-text">
                         Generate a project to see the overview.
                     </p>
 
                 </div>
-                <div class="blueprint-card complexity-card">
 
-    <div class="card-label">PROJECT COMPLEXITY</div>
+                <!-- Complexity -->
 
-    <div class="complexity-score">
-        <span id="complexityScore">50</span>
-        <small>/100</small>
-    </div>
-  <div class="complexity-bar">
-    <div id="complexityProgress"></div>
-</div>
+                <div class="dash-card" style="--i: 1; --acc: #8b5cf6">
 
-    <div id="complexityLevel" class="complexity-level">
-        Intermediate
-    </div>
+                    <p class="dash-label">
+                        COMPLEXITY
+                    </p>
 
-    <p id="estimatedTime">
-        Estimated development time: 1–2 weeks
-    </p>
+                    <div class="ring-wrap">
 
-</div>
+                        <svg class="ring" viewBox="0 0 128 128">
+                            <defs>
+                                <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0" stop-color="#5b8cff"/>
+                                    <stop offset="0.55" stop-color="#8b5cf6"/>
+                                    <stop offset="1" stop-color="#e879f9"/>
+                                </linearGradient>
+                            </defs>
+                            <circle class="ring-track" cx="64" cy="64" r="54"/>
+                            <circle class="ring-progress" id="complexityRing" cx="64" cy="64" r="54" style="--p: 0%"/>
+                        </svg>
 
+                        <div class="ring-center">
+                            <span id="complexityScore" class="ring-score">0</span>
+                            <small>/100</small>
+                        </div>
 
-                <!-- Recommended Stack -->
+                    </div>
 
-                <div class="blueprint-card">
+                    <div class="complexity-bar">
+                        <div id="complexityProgress"></div>
+                    </div>
 
-                    <h3>
-                        Recommended Stack
-                    </h3>
+                    <div id="complexityLevel" class="complexity-level">
+                        Intermediate
+                    </div>
+
+                    <div class="eta">
+                        <span class="dash-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                        </span>
+                        <div>
+                            <p class="dash-label">
+                                ESTIMATED TIME
+                            </p>
+                            <p id="estimatedTime" class="dash-text">
+                                1–2 weeks
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Tech stack -->
+
+                <div class="dash-card" style="--i: 2; --acc: #22d3ee">
+
+                    <div class="dash-head">
+                        <div class="dash-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M7 7h10M7 12h10M7 17h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                        </div>
+                        <p class="dash-label">TECH STACK</p>
+                    </div>
 
                     <div id="techStack" class="stack-list">
 
@@ -305,78 +522,125 @@
 
                 </div>
 
+                <!-- Features -->
 
-                <!-- Core Features -->
+                <div class="dash-card" style="--i: 3; --acc: #e879f9">
 
-                <div class="blueprint-card">
-
-                    <h3>
-                        Core Features
-                    </h3>
+                    <div class="dash-head">
+                        <div class="dash-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4.5 13.5H11L9.5 22 19 10.5h-6.5L13 2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                        </div>
+                        <p class="dash-label">FEATURES</p>
+                    </div>
 
                     <div id="featuresList" class="feature-list">
 
-                        <span>
-                            Features will appear here
-                        </span>
+                        <span>Features will appear here</span>
 
                     </div>
 
                 </div>
 
+                <!-- Architecture -->
 
-                <!-- System Architecture -->
+                <div class="dash-card span-2" style="--i: 4; --acc: #a78bfa">
 
-                <div class="blueprint-card">
-
-                    <h3>
-                        System Architecture
-                    </h3>
+                    <div class="dash-head">
+                        <div class="dash-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 19 7v10l-7 3.5L5 17V7l7-3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                        </div>
+                        <p class="dash-label">ARCHITECTURE</p>
+                    </div>
 
                     <div id="architecture" class="architecture">
 
-    <div class="architecture-box">
-        User
-    </div>
+                        <div class="architecture-box">
+                            <i class="arch-glyph">
+                                <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10.5h17M7 8h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                            </i>
+                            <span class="arch-label">User</span>
+                        </div>
 
-    <div class="arrow">
-        ↓
-    </div>
+                        <div class="arrow"></div>
 
-    <div class="architecture-box">
-        Frontend
-    </div>
+                        <div class="architecture-box">
+                            <i class="arch-glyph">
+                                <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10.5h17M7 8h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                            </i>
+                            <span class="arch-label">Frontend</span>
+                        </div>
 
-    <div class="arrow">
-        ↓
-    </div>
+                        <div class="arrow"></div>
 
-    <div class="architecture-box">
-        Backend API
-    </div>
+                        <div class="architecture-box">
+                            <i class="arch-glyph">
+                                <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10.5h17" stroke="currentColor" stroke-width="1.8"/></svg>
+                            </i>
+                            <span class="arch-label">Backend API</span>
+                        </div>
 
-    <div class="arrow">
-        ↓
-    </div>
+                        <div class="arrow"></div>
 
-    <div class="architecture-box">
-        Database
-    </div>
+                        <div class="architecture-box">
+                            <i class="arch-glyph">
+                                <svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5.5" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 5.5v13c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-13" stroke="currentColor" stroke-width="1.8"/></svg>
+                            </i>
+                            <span class="arch-label">Database</span>
+                        </div>
 
-</div>
+                    </div>
 
                 </div>
 
+                <!-- Tasks -->
 
-                <!-- Development Roadmap -->
+                <div class="dash-card span-3" style="--i: 5; --acc: #34d399">
 
-                <div class="blueprint-card full-width">
+                    <div class="dash-head">
+                        <div class="dash-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5 9 17l10.5-10.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <p class="dash-label">TASKS</p>
+                    </div>
 
-                    <h3>
-                        Development Roadmap
-                    </h3>
+                    <div id="tasksList" class="tasks-list">
 
-                    <div class="roadmap">
+                        <div class="task">
+                            <span class="task-number">01</span>
+                            Project setup
+                        </div>
+
+                        <div class="task">
+                            <span class="task-number">02</span>
+                            Build core features
+                        </div>
+
+                        <div class="task">
+                            <span class="task-number">03</span>
+                            Backend integration
+                        </div>
+
+                        <div class="task">
+                            <span class="task-number">04</span>
+                            Testing and deployment
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Roadmap -->
+
+                <div class="dash-card span-3" style="--i: 6; --acc: #fbbf24">
+
+                    <div class="dash-head">
+                        <div class="dash-icon">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 19.5v-7M9.8 19.5V9M15 19.5v-10M20.2 19.5V4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        </div>
+                        <p class="dash-label">DEVELOPMENT ROADMAP</p>
+                    </div>
+
+                    <div id="roadmap" class="roadmap">
 
                         <div class="roadmap-item">
                             <span>01</span>
@@ -395,54 +659,7 @@
 
                         <div class="roadmap-item">
                             <span>04</span>
-                            Testing & Deployment
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Development Tasks -->
-
-                <div class="blueprint-card full-width">
-
-                    <h3>
-                        Development Tasks
-                    </h3>
-
-                    <div id="tasksList" class="tasks-list">
-
-                        <div class="task">
-                            <span class="task-number">
-                                01
-                            </span>
-
-                            Project setup
-                        </div>
-
-                        <div class="task">
-                            <span class="task-number">
-                                02
-                            </span>
-
-                            Build core features
-                        </div>
-
-                        <div class="task">
-                            <span class="task-number">
-                                03
-                            </span>
-
-                            Backend integration
-                        </div>
-
-                        <div class="task">
-                            <span class="task-number">
-                                04
-                            </span>
-
-                            Testing and deployment
+                            Testing &amp; Deployment
                         </div>
 
                     </div>
@@ -460,15 +677,55 @@
 
     <footer>
 
-        <div class="logo">
-            Project<span>Forge</span>
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-brand">
+                    <a class="logo" href="#build">
+                        Project<span>Forge</span>
+                    </a>
+                    <p>
+                        Turn raw ideas into structured, build-ready blueprints.
+                        Plan your stack, architecture and roadmap in seconds.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="#build">Generate blueprint</a>
+                    <a href="#features" onclick="scrollToFeatures()">Features</a>
+                    <a href="#how-it-works">How it works</a>
+                    <a href="#blueprint">View your blueprint</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+                    <a href="#how-it-works">Documentation</a>
+                    <a href="mailto:hello@projectforge.app">Contact</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Settings</a>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 ProjectForge. All rights reserved.</p>
+                <p>Build smarter. Ship faster.</p>
+            </div>
+
         </div>
 
-        <p>
-            Build smarter. Ship faster.
-        </p>
-
     </footer>
+
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 
     <script src="script.js"></script>

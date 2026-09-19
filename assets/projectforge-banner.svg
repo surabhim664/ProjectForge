@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+<defs>
+<linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#312e81"/></linearGradient>
+</defs>
+<rect width="1200" height="360" rx="32" fill="url(#g)"/>
+<circle cx="1040" cy="70" r="170" fill="#6366f1" opacity=".16"/>
+<circle cx="1080" cy="300" r="190" fill="#22d3ee" opacity=".08"/>
+<text x="70" y="125" font-family="Arial,sans-serif" font-size="58" font-weight="700" fill="white">⚒ ProjectForge</text>
+<text x="72" y="175" font-family="Arial,sans-serif" font-size="25" fill="#c7d2fe">Build Smarter.</text>
+<text x="72" y="225" font-family="Arial,sans-serif" font-size="20" fill="#cbd5e1">Idea → Blueprint → Plan → Build</text>
+<rect x="72" y="260" width="370" height="4" rx="2" fill="#818cf8"/>
+<text x="72" y="305" font-family="Arial,sans-serif" font-size="16" fill="#94a3b8">An AI-ready full-stack project planning platform</text>
+</svg>

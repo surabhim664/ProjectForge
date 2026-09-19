@@ -21,6 +21,40 @@ function scrollToFeatures() {
 
 
 // ============================================
+// BACKEND CONFIGURATION
+// ============================================
+
+// Override by setting window.PROJECTFORGE_API_BASE before loading script.js.
+const API_BASE = window.PROJECTFORGE_API_BASE || "http://localhost:5000";
+
+// The blueprint currently shown in the dashboard (also used by Save / Download).
+let currentBlueprint = null;
+
+function safeParse(value, fallback) {
+    if (Array.isArray(value)) return value;
+    if (typeof value !== "string") return fallback;
+    try {
+        const parsed = JSON.parse(value);
+        return Array.isArray(parsed) ? parsed : fallback;
+    }
+    catch (err) {
+        return fallback;
+    }
+}
+
+function formatDate(value) {
+    if (!value) return "";
+    const date = new Date(value);
+    if (isNaN(date.getTime())) return "";
+    return date.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    });
+}
+
+
+// ============================================
 // IDEA VALIDATION
 // ============================================
 
@@ -914,23 +948,50 @@ async function generateProject() {
 
     const blueprint = buildBlueprint(idea);
 
-    // ============================================
+    renderBlueprint(blueprint, idea);
+
+    if (generateStatus) {
+        generateStatus.textContent = "Blueprint generated \u2713";
+    }
+
+    const statePill = document.getElementById("statePill");
+
+    if (statePill) {
+        statePill.innerHTML = '<span class="pill-dot"></span> Blueprint ready';
+    }
+
+    if (ideaBox) {
+        ideaBox.classList.remove("generating");
+    }
+
+    setButtonLoading(false);
+}
+
+
+// ============================================
+// RENDER BLUEPRINT
+// (shared by live generation and saved projects)
+// ============================================
+
+function renderBlueprint(blueprint, subtitle) {
+
+    currentBlueprint = blueprint;
+
     // PROJECT TITLE & SUBTITLE
-    // ============================================
 
     document.getElementById("projectTitle").textContent = blueprint.title;
 
     const subtitleElement = document.getElementById("projectSubtitle");
 
+    const message = (subtitle != null && subtitle !== "")
+        ? subtitle
+        : (blueprint.subtitle || "");
+
     if (subtitleElement) {
-        subtitleElement.textContent = blueprint.subtitle.length > 180
-            ? blueprint.subtitle.substring(0, 180) + "\u2026"
-            : blueprint.subtitle;
+        subtitleElement.textContent = message;
     }
 
-    // ============================================
     // DOMAIN BADGE
-    // ============================================
 
     const domainPill = document.getElementById("domainPill");
 
@@ -940,15 +1001,11 @@ async function generateProject() {
             blueprint.domainLabel;
     }
 
-    // ============================================
     // PROJECT DESCRIPTION
-    // ============================================
 
     document.getElementById("overview").textContent = blueprint.description;
 
-    // ============================================
     // TECHNOLOGY STACK
-    // ============================================
 
     const techStack = document.getElementById("techStack");
 
@@ -963,9 +1020,7 @@ async function generateProject() {
         techStack.appendChild(tag);
     });
 
-    // ============================================
     // FEATURES
-    // ============================================
 
     const featuresList = document.getElementById("featuresList");
 
@@ -980,9 +1035,7 @@ async function generateProject() {
         featuresList.appendChild(item);
     });
 
-    // ============================================
     // DEVELOPMENT TASKS
-    // ============================================
 
     const tasksList = document.getElementById("tasksList");
 
@@ -1003,9 +1056,7 @@ async function generateProject() {
         tasksList.appendChild(taskElement);
     });
 
-    // ============================================
     // DEVELOPMENT ROADMAP
-    // ============================================
 
     const roadmap = document.getElementById("roadmap");
 
@@ -1040,9 +1091,7 @@ async function generateProject() {
         }).join("");
     }
 
-    // ============================================
     // ARCHITECTURE
-    // ============================================
 
     const architecture = document.getElementById("architecture");
 
@@ -1055,9 +1104,7 @@ async function generateProject() {
         }
     );
 
-    // ============================================
     // DISPLAY COMPLEXITY
-    // ============================================
 
     const complexityScoreElement = document.getElementById("complexityScore");
     const complexityLevelElement = document.getElementById("complexityLevel");
@@ -1069,9 +1116,7 @@ async function generateProject() {
     if (estimatedTimeElement) estimatedTimeElement.textContent = blueprint.estimatedTime;
     if (complexityProgress) complexityProgress.style.width = "0%";
 
-    // ============================================
     // SHOW BLUEPRINT
-    // ============================================
 
     const blueprintSection = document.getElementById("blueprint");
 
@@ -1112,21 +1157,21 @@ async function generateProject() {
 
     blueprintSection.scrollIntoView({ behavior: "smooth" });
 
-    if (generateStatus) {
-        generateStatus.textContent = "Blueprint generated \u2713";
+    // Reset save / download controls for this (possibly new) blueprint.
+
+    const saveBtn = document.getElementById("saveProjectBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const saveLabel = document.querySelector("#saveProjectBtn .btn-label-copy");
+
+    if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.classList.remove("saved");
+        if (saveLabel) saveLabel.textContent = "Save Project";
     }
 
-    const statePill = document.getElementById("statePill");
-
-    if (statePill) {
-        statePill.innerHTML = '<span class="pill-dot"></span> Blueprint ready';
+    if (downloadBtn) {
+        downloadBtn.disabled = false;
     }
-
-    if (ideaBox) {
-        ideaBox.classList.remove("generating");
-    }
-
-    setButtonLoading(false);
 }
 
 
@@ -1235,6 +1280,478 @@ function showToast(message) {
     showToast._timer = setTimeout(function () {
         toast.classList.remove("show");
     }, 2200);
+}
+
+
+// ============================================
+// SAVE PROJECT
+// ============================================
+
+async function saveProject() {
+
+    if (!currentBlueprint) {
+        showToast("Generate a blueprint first");
+        return;
+    }
+
+    const saveBtn = document.getElementById("saveProjectBtn");
+    const saveLabel = document.querySelector("#saveProjectBtn .btn-label-copy");
+
+    if (saveBtn) {
+        saveBtn.disabled = true;
+    }
+
+    const payload = {
+        title: currentBlueprint.title,
+        idea: currentBlueprint.subtitle,
+        projectType: currentBlueprint.projectType,
+        description: currentBlueprint.description,
+        stack: currentBlueprint.stack,
+        features: currentBlueprint.features,
+        tasks: currentBlueprint.tasks,
+        chain: currentBlueprint.chain,
+        complexityScore: currentBlueprint.complexityScore,
+        complexityLevel: currentBlueprint.complexityLevel,
+        estimatedTime: currentBlueprint.estimatedTime
+    };
+
+    try {
+
+        const response = await fetch(API_BASE + "/api/projects", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Could not save the project.");
+        }
+
+        currentBlueprint.savedId = data.id;
+
+        showToast("Project saved \u2713");
+
+        if (saveBtn) {
+            saveBtn.classList.add("saved");
+            if (saveLabel) saveLabel.textContent = "Saved \u2713";
+        }
+
+        loadSavedProjects();
+    }
+    catch (err) {
+
+        showToast("Could not save \u2014 is the backend running?");
+
+        if (saveBtn) {
+            saveBtn.disabled = false;
+        }
+    }
+}
+
+
+// ============================================
+// DOWNLOAD BLUEPRINT (print / save-as-PDF)
+// ============================================
+
+function downloadBlueprint() {
+
+    if (!currentBlueprint) {
+        showToast("Generate a blueprint first");
+        return;
+    }
+
+    fillDownloadDocument(currentBlueprint);
+    openDownloadModal();
+}
+
+function openDownloadModal() {
+
+    const modal = document.getElementById("downloadModal");
+
+    if (!modal) return;
+
+    modal.classList.add("open");
+    document.body.classList.add("modal-open");
+
+    const dialog = modal.querySelector(".modal-dialog");
+
+    if (dialog) {
+        restartAnimations(dialog);
+    }
+}
+
+function closeDownloadModal() {
+
+    const modal = document.getElementById("downloadModal");
+
+    if (!modal) return;
+
+    modal.classList.remove("open");
+    document.body.classList.remove("modal-open");
+}
+
+function printBlueprint() {
+
+    document.body.classList.add("printing-download");
+
+    const finishPrint = function () {
+        document.body.classList.remove("printing-download");
+        window.removeEventListener("afterprint", finishPrint);
+    };
+
+    window.addEventListener("afterprint", finishPrint);
+
+    window.setTimeout(function () {
+        window.print();
+    }, 60);
+}
+
+function fillDownloadDocument(blueprint) {
+
+    const preview = document.getElementById("downloadPreview");
+
+    if (!preview) return;
+
+    const stackItems = (blueprint.stack || []).map(function (item) {
+        return '<li>' + item + '</li>';
+    }).join("");
+
+    const featureItems = (blueprint.features || []).map(function (item) {
+        return '<li>' + item + '</li>';
+    }).join("");
+
+    const taskItems = (blueprint.tasks || []).map(function (task, index) {
+        return '<li><span class="doc-task-num">' +
+            String(index + 1).padStart(2, "0") +
+            '</span>' + task + '</li>';
+    }).join("");
+
+    const chip = function (label, value) {
+        return '<span class="doc-chip">' + label + ': <strong>' + value + '</strong></span>';
+    };
+
+    preview.innerHTML =
+        '<div class="doc-header">' +
+            '<div class="doc-marks">' +
+                '<span class="doc-logo">' +
+                    'Project<span class="doc-logo-accent">Forge</span>' +
+                '</span>' +
+                '<span class="doc-tag">Project Blueprint</span>' +
+            '</div>' +
+            '<div class="doc-date">' +
+                (formatDate(new Date().toISOString()) || "") +
+            '</div>' +
+        '</div>' +
+
+        '<div class="doc-title-block">' +
+            '<h1>' + escapeHtml(blueprint.title) + '</h1>' +
+            '<p class="doc-subtitle">' +
+                '<span class="doc-type">' + escapeHtml(blueprint.domainLabel) + '</span>' +
+                (blueprint.subtitle
+                    ? '<span class="doc-idea">' + escapeHtml(blueprint.subtitle.substring(0, 220)) + '</span>'
+                    : "") +
+            '</p>' +
+        '</div>' +
+
+        '<div class="doc-stats">' +
+            chip("Complexity", blueprint.complexityScore + "/100 \u00B7 " + blueprint.complexityLevel) +
+            chip("Estimated time", blueprint.estimatedTime || "\u2014") +
+        '</div>' +
+
+        '<div class="doc-section">' +
+            '<h2>Overview</h2>' +
+            '<p>' + escapeHtml(blueprint.description) + '</p>' +
+        '</div>' +
+
+        (stackItems
+            ? '<div class="doc-section">' +
+                '<h2>Technology Stack</h2>' +
+                '<ul class="doc-list doc-grid">' + stackItems + '</ul>' +
+              '</div>'
+            : "") +
+
+        (featureItems
+            ? '<div class="doc-section">' +
+                '<h2>Core Features</h2>' +
+                '<ul class="doc-list">' + featureItems + '</ul>' +
+              '</div>'
+            : "") +
+
+        '<div class="doc-section">' +
+            '<h2>Architecture</h2>' +
+            '<div class="doc-flow">' +
+                (blueprint.chain || []).map(function (node, index) {
+                    return (index > 0 ? '<span class="doc-flow-arrow">&rarr;</span>' : "") +
+                        '<span class="doc-flow-node">' +
+                            escapeHtml(node) +
+                        '</span>';
+                }).join("") +
+            '</div>' +
+        '</div>' +
+
+        (taskItems
+            ? '<div class="doc-section">' +
+                '<h2>Development Tasks</h2>' +
+                '<ol class="doc-tasks">' + taskItems + '</ol>' +
+              '</div>'
+            : "") +
+
+        '<div class="doc-footer">' +
+            '<p>Generated with ProjectForge \u2014 AI-assisted suggestions for planning. ' +
+            'Review and validate before starting development.</p>' +
+            '<p class="doc-footer-brand">ProjectForge \u00B7 Build Smarter</p>' +
+        '</div>';
+}
+
+function escapeHtml(value) {
+
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (character) {
+
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\"": "&quot;",
+            "'": "&#39;"
+        };
+
+        return entities[character];
+    });
+}
+
+
+// ============================================
+// SAVED PROJECTS ("My Projects")
+// ============================================
+
+function mapRowToBlueprint(row) {
+
+    return {
+        id: row.id,
+        projectType: row.project_type || "general",
+        domainLabel: DOMAIN_LABELS[row.project_type] || "General",
+        title: row.title,
+        subtitle: row.idea,
+        description: row.description || "",
+        stack: safeParse(row.tech_stack, []),
+        features: safeParse(row.features, []),
+        tasks: safeParse(row.tasks, []),
+        chain: safeParse(row.architecture, ["User", "Frontend", "Backend API", "Database"]),
+        complexityScore: row.complexity_score || 0,
+        complexityLevel: row.complexity_level || "Beginner",
+        estimatedTime: row.estimated_time || "\u2014",
+        createdAt: row.created_at
+    };
+}
+
+async function loadSavedProjects() {
+
+    const grid = document.getElementById("savedProjectsGrid");
+    const empty = document.getElementById("savedProjectsEmpty");
+    const status = document.getElementById("savedProjectsStatus");
+
+    if (!grid) return;
+
+    if (status) {
+        status.textContent = "Loading your projects\u2026";
+        status.classList.remove("show");
+
+        requestAnimationFrame(function () {
+            status.classList.add("show");
+        });
+    }
+
+    try {
+
+        const response = await fetch(API_BASE + "/api/projects");
+
+        if (!response.ok) {
+            throw new Error("Backend returned an error");
+        }
+
+        const rows = await response.json();
+
+        renderSavedProjects(rows, grid, empty);
+    }
+    catch (err) {
+
+        if (status) {
+            status.textContent = "Could not load saved projects \u2014 is the backend running on " + API_BASE + "?";
+            status.classList.add("show");
+        }
+
+        if (grid) grid.innerHTML = "";
+        if (empty) empty.innerHTML = "";
+    }
+}
+
+function renderSavedProjects(rows, grid, empty) {
+
+    const status = document.getElementById("savedProjectsStatus");
+
+    grid.innerHTML = "";
+
+    if (!rows || !rows.length) {
+
+        if (status) {
+            status.textContent = "";
+            status.classList.remove("show");
+        }
+
+        if (empty) {
+            empty.style.display = "block";
+            empty.innerHTML =
+                '<div class="saved-empty-card">' +
+                    '<h3>No saved blueprints yet</h3>' +
+                    '<p>Generate a project and hit \u201CSave Project\u201D to keep it here.</p>' +
+                '</div>';
+        }
+
+        return;
+    }
+
+    if (empty) {
+        empty.style.display = "none";
+    }
+
+    if (status) {
+        status.textContent = rows.length + (rows.length === 1
+            ? " blueprint saved"
+            : " blueprints saved");
+        status.classList.add("show");
+    }
+
+    const card = function (blueprint, index) {
+
+        const accent = "var(--acc, #8b5cf6)";
+
+        return (
+            '<article class="saved-card reveal in-view" style="--i: ' + index + '; --acc: ' + accent + '" data-id="' + blueprint.id + '">' +
+                '<div class="saved-head">' +
+                    '<span class="saved-type">' + escapeHtml(blueprint.domainLabel) + '</span>' +
+                    '<span class="saved-date">' + escapeHtml(formatDate(blueprint.createdAt)) + '</span>' +
+                '</div>' +
+                '<h3 class="saved-title">' + escapeHtml(blueprint.title) + '</h3>' +
+                '<p class="saved-idea">' + escapeHtml(blueprint.subtitle.substring(0, 140)) + '</p>' +
+                '<div class="saved-meta">' +
+                    '<span>Complexity ' + blueprint.complexityScore + '/100</span>' +
+                    '<span class="saved-dot"></span>' +
+                    '<span>' + escapeHtml(blueprint.complexityLevel) + '</span>' +
+                    '<span class="saved-dot"></span>' +
+                    '<span>ETA ' + escapeHtml(blueprint.estimatedTime) + '</span>' +
+                '</div>' +
+                '<div class="saved-actions">' +
+                    '<button class="btn btn-primary saved-open" type="button" onclick="openProject(' + blueprint.id + ')">' +
+                        'Open blueprint' +
+                    '</button>' +
+                    '<button class="btn btn-ghost saved-del" type="button" ' +
+                        'onclick="deleteProject(' + blueprint.id + ', this)" data-id="' + blueprint.id + '">' +
+                        'Delete' +
+                    '</button>' +
+                '</div>' +
+            '</article>'
+        );
+    };
+
+    grid.innerHTML = rows.map(function (row, index) {
+        return card(mapRowToBlueprint(row), index);
+    }).join("");
+}
+
+async function openProject(id) {
+
+    try {
+
+        const response = await fetch(API_BASE + "/api/projects/" + id);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Could not open project.");
+        }
+
+        renderBlueprint(mapRowToBlueprint(data));
+    }
+    catch (err) {
+
+        showToast("Could not open project \u2014 is the backend running?");
+    }
+}
+
+async function deleteProject(id, button) {
+
+    if (!window.confirm("Delete this saved project?")) return;
+
+    try {
+
+        const response = await fetch(API_BASE + "/api/projects/" + id, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error("Could not delete project.");
+        }
+
+        showToast("Project deleted");
+
+        loadSavedProjects();
+    }
+    catch (err) {
+
+        showToast("Could not delete \u2014 is the backend running?");
+    }
+}
+
+
+// ============================================
+// CONTACT CONFIG
+// ============================================
+
+async function fetchContactConfig() {
+
+    try {
+
+        const response = await fetch(API_BASE + "/api/config");
+
+        if (!response.ok) {
+            throw new Error("Backend returned an error");
+        }
+
+        const data = await response.json();
+
+        applyContactEmail(data.contactEmail || "");
+    }
+    catch (err) {
+
+        applyContactEmail("");
+    }
+}
+
+function applyContactEmail(email) {
+
+    const link = document.getElementById("contactLink");
+
+    if (!link) return;
+
+    const clean = (email || "").trim();
+
+    if (clean) {
+
+        link.setAttribute("href", "mailto:" + clean);
+        link.textContent = "Contact";
+        link.classList.remove("contact-unset");
+        link.removeAttribute("data-unset");
+    }
+    else {
+
+        link.removeAttribute("href");
+        link.textContent = "Contact";
+        link.classList.add("contact-unset");
+        link.setAttribute("data-unset", "true");
+        link.setAttribute("title", "Contact email not configured");
+    }
 }
 
 
@@ -1541,4 +2058,47 @@ function setButtonLoading(loading) {
             generateProject();
         }
     });
+})();
+
+
+// ============================================
+// INIT: DOWNLOAD MODAL INTERACTIONS
+// ============================================
+
+(function initDownloadModal() {
+
+    const modal = document.getElementById("downloadModal");
+
+    if (!modal) return;
+
+    const closeBtn = document.getElementById("downloadClose");
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeDownloadModal);
+    }
+
+    modal.addEventListener("click", function (event) {
+
+        if (event.target === modal) {
+            closeDownloadModal();
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+
+        if (event.key === "Escape" && modal.classList.contains("open")) {
+            closeDownloadModal();
+        }
+    });
+})();
+
+
+// ============================================
+// INIT: APP BOOT (contact + saved projects)
+// ============================================
+
+(function bootApp() {
+
+    fetchContactConfig();
+    loadSavedProjects();
 })();

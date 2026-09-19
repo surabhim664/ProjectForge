@@ -46,6 +46,7 @@
             <li><a href="#features" data-spy="features">Features</a></li>
             <li><a href="#how-it-works" data-spy="how-it-works">How it works</a></li>
             <li><a href="#build" data-spy="build">Build</a></li>
+            <li><a href="#projects" data-spy="projects">My Projects</a></li>
             <li>
                 <a href="https://github.com/" target="_blank" rel="noopener"
                    aria-label="ProjectForge on GitHub (opens in a new tab)">
@@ -420,11 +421,23 @@
                     <span class="header-pill" id="statePill">
                         <span class="pill-dot"></span> Ready
                     </span>
-                    <button class="btn btn-ghost copy-btn" type="button" id="copyBtn" onclick="copyBlueprint()"
-                            aria-label="Copy blueprint summary">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.7"/></svg>
-                        Copy blueprint
-                    </button>
+<button class="btn btn-primary save-btn" type="button" id="saveProjectBtn" onclick="saveProject()" disabled
+                        aria-label="Save this project blueprint">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h11l3 3v13H5V4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 4v5h8V4M8 20v-6h8v6" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                    <span class="btn-label-copy">Save Project</span>
+                </button>
+
+                <button class="btn btn-ghost dl-btn" type="button" id="downloadBtn" onclick="downloadBlueprint()" disabled
+                        aria-label="Download blueprint as PDF">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11M7 9l5 5 5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 19.5h15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    Download
+                </button>
+
+                <button class="btn btn-ghost copy-btn" type="button" id="copyBtn" onclick="copyBlueprint()"
+                        aria-label="Copy blueprint summary">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.7"/></svg>
+                    Copy blueprint
+                </button>
                 </div>
 
             </div>
@@ -673,6 +686,40 @@
     </section>
 
 
+    <!-- Saved projects -->
+
+    <section class="projects" id="projects">
+
+        <div class="container">
+
+            <div class="section-heading reveal">
+
+                <p class="section-label">
+                    MY PROJECTS
+                </p>
+
+                <h2>
+                    Your saved blueprints.
+                </h2>
+
+                <p>
+                    Every project you save stays here, ready to open
+                    again whenever you need it.
+                </p>
+
+            </div>
+
+            <div class="saved-status" id="savedProjectsStatus" role="status" aria-live="polite"></div>
+
+            <div class="saved-grid" id="savedProjectsGrid"></div>
+
+            <div class="saved-empty" id="savedProjectsEmpty"></div>
+
+        </div>
+
+    </section>
+
+
     <!-- Footer -->
 
     <footer>
@@ -703,14 +750,13 @@
                     <h4>Resources</h4>
                     <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
                     <a href="#how-it-works">Documentation</a>
-                    <a href="mailto:hello@projectforge.app">Contact</a>
+                    <a href="#" id="contactLink" class="contact-link">Contact</a>
                 </div>
 
                 <div class="footer-col">
                     <h4>Legal</h4>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Settings</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Use</a>
                 </div>
 
             </div>
@@ -726,6 +772,46 @@
 
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+    <!-- Download blueprint modal -->
+
+    <div class="modal-overlay" id="downloadModal" role="dialog" aria-modal="true" aria-labelledby="downloadModalTitle">
+
+        <div class="modal-dialog">
+
+            <div class="modal-head">
+                <div>
+                    <h3 id="downloadModalTitle">Blueprint document</h3>
+                    <p>Preview your blueprint, then save it as a PDF from your browser's print dialog.</p>
+                </div>
+                <button class="modal-close" id="downloadClose" type="button" aria-label="Close preview">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="doc-paper" id="downloadPreview"></div>
+            </div>
+
+            <div class="modal-foot">
+                <p class="modal-hint">
+                    Tip: choose "Save as PDF" in the print dialog to export.
+                </p>
+                <div class="modal-foot-actions">
+                    <button class="btn btn-ghost" type="button" onclick="closeDownloadModal()">
+                        Close
+                    </button>
+                    <button class="btn btn-primary" type="button" onclick="printBlueprint()">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 9V4h10v5M7 17H4.5V10h15v7H17" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><rect x="7" y="14" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>
+                        Save as PDF
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 
     <script src="script.js"></script>

@@ -158,7 +158,7 @@ This architecture keeps the current system simple while providing a foundation f
 
 ### Landing Page
 
-<img width="1920" height="883" alt="ProjectForge landing page" src="https://github.com/user-attachments/assets/94bc7a7e-2a48-44a6-ac5f-a71d57196b85" />
+<img width="1883" height="883" alt="main" src="https://github.com/user-attachments/assets/4baca94b-42a2-4fc2-9400-1e15425b1fd2" />
 
 ### Generated Project Blueprint
 

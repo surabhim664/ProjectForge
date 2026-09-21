@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <strong>Turn an idea into a build-ready project blueprint.</strong><br>
-  ProjectForge transforms rough software ideas into structured project plans with features, technology choices, architecture, and implementation direction.
+  <strong>Turn a software idea into a build-ready project blueprint.</strong><br>
+  ProjectForge helps developers transform rough ideas into structured project plans with features, technology choices, architecture direction, tasks, and complexity insights.
 </p>
 
 <p align="center">
@@ -18,61 +18,71 @@
 
 ---
 
-## 💡 The Problem
+## 💡 Overview
 
-Starting a software project is often harder than writing the first line of code.
+Turning a software idea into an actual project can be difficult.
 
-A developer may have a simple idea such as:
+A developer may start with something as simple as:
 
-> “I want to build an app that helps students manage their projects.”
+> "I want to build an application that helps students manage their projects."
 
-But turning that sentence into a practical plan requires answering:
+But before development can begin, several questions need to be answered:
 
-- What exactly should the product do?
-- Who are the users?
-- Which technologies should be used?
-- What features are essential?
-- How should the system be structured?
-- Where should development begin?
+* What problem does the project solve?
+* Who are the intended users?
+* What features are required?
+* Which technologies should be used?
+* How should the system be structured?
+* What should be implemented first?
+* How complex is the project?
 
-**ProjectForge bridges that gap.**
+**ProjectForge is designed to bridge this gap.**
+
+It transforms a rough software idea into a structured project blueprint that provides a clearer starting point for development.
 
 ---
 
 ## 🚀 What is ProjectForge?
 
-ProjectForge is a full-stack project ideation and planning platform that converts a raw project idea into a structured blueprint.
+ProjectForge is a full-stack project planning and ideation platform designed around the workflow:
 
-### Idea → Blueprint → Build
+```text
+Idea → Blueprint → Development
+```
 
-Instead of returning only an idea description, ProjectForge organizes the concept into useful development information such as:
+Instead of producing only a general description, ProjectForge organizes an idea into multiple development-oriented components:
 
-- 🎯 Project title
-- 📝 Project description
-- 🧩 Project type
-- 🛠️ Technology stack
-- ✨ Core features
-- 🏗️ Architecture direction
-- 📋 Development tasks
-- 📊 Complexity information
-- 💾 Persistent project data
+* 🎯 Project title
+* 📝 Project description
+* 🧩 Project type
+* 🛠️ Technology stack
+* ✨ Core features
+* 🏗️ Architecture direction
+* 📋 Development tasks
+* 📊 Complexity assessment
+* ⏱️ Estimated development time
+* 💾 Project data
 
-The goal is to help developers move from **“I have an idea”** to **“I know what to build next.”**
+The goal is simple:
+
+> **Move from "I have an idea" to "I know what to build next."**
 
 ---
 
 ## ✨ Key Features
 
-| Feature | Purpose |
-|---|---|
-| 💭 Idea Input | Describe a project in natural language |
-| 🧠 Blueprint Generation | Convert the idea into structured project information |
-| 🛠️ Tech Stack Suggestions | Identify suitable technologies |
-| ✨ Feature Breakdown | Turn a concept into concrete functionality |
-| 🏗️ Architecture Direction | Provide a starting point for system design |
-| 📋 Task Planning | Break the project into implementation steps |
-| 📊 Complexity Assessment | Give an initial estimate of project difficulty |
-| 💾 MySQL Persistence | Store generated projects for future use |
+| Feature                    | Description                                         |
+| -------------------------- | --------------------------------------------------- |
+| 💭 Idea Input              | Describe a software project using natural language  |
+| 🧠 Blueprint Generation    | Convert an idea into structured project information |
+| 🛠️ Technology Suggestions | Identify technologies suitable for the project      |
+| ✨ Feature Breakdown        | Convert a concept into concrete functionality       |
+| 🏗️ Architecture Direction | Provide a starting point for system architecture    |
+| 📋 Task Planning           | Break development into actionable tasks             |
+| 📊 Complexity Assessment   | Estimate project difficulty                         |
+| ⏱️ Time Estimation         | Provide an initial development-time estimate        |
+| 🗄️ MySQL Integration      | Provide persistent project data storage             |
+| 🔌 REST API Foundation     | Connect the frontend with backend services          |
 
 ---
 
@@ -88,86 +98,75 @@ The user enters a rough software idea.
 
 ### 02 — Forge
 
-ProjectForge processes the idea and creates a structured project blueprint.
+ProjectForge analyzes the input and generates a structured project blueprint.
 
 ### 03 — Understand
 
-The user gets a clearer view of the project's features, technologies, architecture, and complexity.
+The generated blueprint provides a clearer view of the project's:
 
-### 04 — Save
+* Features
+* Technology stack
+* Architecture
+* Tasks
+* Complexity
+* Estimated development time
 
-Project information can be persisted through the Node.js/Express backend and MySQL database.
+### 04 — Persist
+
+The backend and MySQL database provide the foundation for storing project information.
 
 ### 05 — Build
 
-The blueprint becomes the starting point for actual development.
+The blueprint becomes the starting point for actual implementation.
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ System Architecture
 
 <p align="center">
   <img src="assets/architecture.svg" alt="ProjectForge architecture" width="100%">
 </p>
 
-The current architecture follows a simple full-stack flow:
+The current system follows a straightforward full-stack architecture:
 
 ```text
-┌──────────────────┐
-│     Frontend     │
-│ HTML / CSS / JS  │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│   Express API    │
-│     Node.js      │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│      MySQL       │
-│   projectforge   │
-└──────────────────┘
+┌──────────────────────────┐
+│        Frontend          │
+│     HTML / CSS / JS      │
+└────────────┬─────────────┘
+             │
+             │ HTTP Requests
+             ▼
+┌──────────────────────────┐
+│      Express API         │
+│        Node.js           │
+└────────────┬─────────────┘
+             │
+             │ SQL Queries
+             ▼
+┌──────────────────────────┐
+│          MySQL           │
+│       projectforge       │
+└──────────────────────────┘
 ```
 
-This keeps the initial system easy to understand while providing a foundation for future AI-powered capabilities.
+This architecture keeps the current system simple while providing a foundation for future AI-assisted project planning and project-management capabilities.
 
 ---
 
 ## 📸 Screenshots
 
-> Add real ProjectForge screenshots here after deployment.
-
 ### Landing Page
 
-```text
-assets/home.png
-```
+<img width="1920" height="883" alt="ProjectForge landing page" src="https://github.com/user-attachments/assets/94bc7a7e-2a48-44a6-ac5f-a71d57196b85" />
 
 ### Generated Project Blueprint
 
-```text
-assets/blueprint.png
-```
+<img width="1862" height="864" alt="Generated Project Blueprint" src="https://github.com/user-attachments/assets/c7082871-9bd7-416b-8782-2b18f8d4985f" />
 
-### Saved Projects
+### Project Results
 
-```text
-assets/projects.png
-```
-
-Recommended repository structure:
-
-```text
-assets/
-├── projectforge-banner.svg
-├── architecture.svg
-├── workflow.svg
-├── home.png
-├── blueprint.png
-└── projects.png
-```
+<img width="1860" height="856" alt="ProjectForge project results" src="https://github.com/user-attachments/assets/3590d15c-c1ca-4bb3-9da7-79114fcee03e" />
 
 ---
 
@@ -175,24 +174,24 @@ assets/
 
 ### Frontend
 
-- HTML5
-- CSS3
-- JavaScript
+* HTML5
+* CSS3
+* JavaScript
 
 ### Backend
 
-- Node.js
-- Express.js
+* Node.js
+* Express.js
 
 ### Database
 
-- MySQL 8
+* MySQL 8
 
-### Development
+### Development Tools
 
-- VS Code
-- Git
-- GitHub
+* VS Code
+* Git
+* GitHub
 
 ---
 
@@ -230,13 +229,13 @@ ProjectForge uses a MySQL database named:
 projectforge
 ```
 
-The main table is:
+The primary project table is:
 
 ```text
 projects
 ```
 
-The project data model includes fields such as:
+The project model includes fields such as:
 
 ```text
 id
@@ -254,27 +253,34 @@ estimated_time
 created_at
 ```
 
-This allows project blueprints to move beyond temporary UI output and become persistent application data.
+This database structure provides the foundation for turning generated project blueprints into persistent application data.
 
 ---
 
-## 🔌 Backend
+## 🔌 Backend API
 
-The backend is built using **Node.js + Express.js**.
+The backend is built using **Node.js and Express.js**.
 
-During local development:
+During local development, the backend runs on:
 
 ```text
 http://localhost:5000
 ```
 
-A database connectivity endpoint is available for testing:
+### Database Health Check
+
+A database connectivity endpoint is available:
 
 ```http
 GET /api/test-db
 ```
 
-The API layer is designed to support project creation, retrieval, and future project-management operations.
+The backend provides the foundation for:
+
+* Project creation
+* Project retrieval
+* Database connectivity
+* Future project-management operations
 
 ---
 
@@ -282,12 +288,12 @@ The API layer is designed to support project creation, retrieval, and future pro
 
 ### Prerequisites
 
-Install:
+Make sure the following are installed:
 
-- Node.js
-- npm
-- MySQL 8
-- Git
+* Node.js
+* npm
+* MySQL 8
+* Git
 
 ### 1. Clone the repository
 
@@ -296,7 +302,7 @@ git clone <YOUR-GITHUB-REPOSITORY-URL>
 cd ProjectForge
 ```
 
-### 2. Install dependencies
+### 2. Install backend dependencies
 
 ```bash
 cd backend
@@ -311,7 +317,11 @@ Open MySQL and run:
 CREATE DATABASE projectforge;
 ```
 
-Create the required `projects` table using the schema expected by `backend/db.js`.
+Create the required `projects` table according to the schema used by:
+
+```text
+backend/db.js
+```
 
 ### 4. Configure environment variables
 
@@ -321,7 +331,7 @@ Create:
 backend/.env
 ```
 
-Example:
+Add:
 
 ```env
 DB_HOST=localhost
@@ -337,107 +347,137 @@ PORT=5000
 node server.js
 ```
 
-You should see:
+The server should start on:
 
 ```text
-ProjectForge server running on http://localhost:5000
-Connected to MySQL database
+http://localhost:5000
 ```
 
 ### 6. Launch the frontend
 
-Open `index.html` using a local development server or your preferred frontend workflow.
+Open `index.html` using a local development server.
+
+For example, you can use the **Live Server** extension in VS Code.
 
 ---
 
 ## 🔐 Security
 
-Never commit credentials to GitHub.
+Never commit credentials or environment files to GitHub.
 
-Your `.gitignore` should include:
+Your `.gitignore` should contain:
 
 ```gitignore
 .env
 node_modules/
 ```
 
-Keep database passwords and other secrets inside environment variables.
+Keep database credentials and other sensitive configuration inside environment variables.
 
 ---
 
 ## 🧠 Future AI Vision
 
-ProjectForge currently establishes the full-stack foundation for a much larger idea.
+ProjectForge is currently built around a full-stack project-planning foundation.
 
-The future architecture can evolve from:
+The long-term vision is to evolve it into an **AI-assisted project engineering workspace**.
+
+### Current Direction
 
 ```text
 User Idea
+    ↓
+Project Analysis
     ↓
 Structured Blueprint
     ↓
 Database
 ```
 
-into:
+### Future Direction
 
 ```text
-User Idea
-    ↓
-┌─────────────────────────┐
-│   AI Project Planner    │
-├─────────────────────────┤
-│ Problem Analysis        │
-│ Feature Decomposition   │
-│ Tech Stack Selection    │
-│ Architecture Planning   │
-│ Database Design         │
-│ API Planning            │
-│ Development Roadmap     │
-└────────────┬────────────┘
-             ↓
-      Project Workspace
-             ↓
-          MySQL
+                    User Idea
+                        │
+                        ▼
+              ┌───────────────────┐
+              │ AI Project Planner│
+              └─────────┬─────────┘
+                        │
+       ┌────────────────┼────────────────┐
+       ▼                ▼                ▼
+ Problem Analysis  Feature Planning  Tech Selection
+       │                │                │
+       └────────────────┼────────────────┘
+                        ▼
+              Architecture Planning
+                        │
+                        ▼
+                Database Design
+                        │
+                        ▼
+               API Planning
+                        │
+                        ▼
+              Development Roadmap
+                        │
+                        ▼
+                Project Workspace
 ```
 
-The long-term goal is to make ProjectForge an **AI-assisted project engineering workspace**, not simply an idea generator.
+Potential future capabilities include:
+
+* AI-assisted project analysis
+* Automatic feature decomposition
+* Database schema generation
+* API endpoint recommendations
+* Architecture generation
+* Development roadmap generation
+* Project documentation generation
+* Code-generation assistance
 
 ---
 
 ## 🗺️ Roadmap
 
-- [x] ProjectForge landing page
-- [x] Idea input interface
-- [x] Project blueprint generation
-- [x] Node.js backend
-- [x] Express API foundation
-- [x] MySQL database
-- [x] Project persistence foundation
-- [ ] Connect all generated fields to database persistence
-- [ ] Saved projects dashboard
-- [ ] Project search and filtering
-- [ ] AI-powered project planning
-- [ ] Automatic database schema generation
-- [ ] API endpoint recommendations
-- [ ] Development roadmap generation
-- [ ] Authentication
-- [ ] Cloud deployment
-- [ ] Project blueprint export
+### Completed
+
+* [x] ProjectForge landing page
+* [x] Idea input interface
+* [x] Project blueprint generation
+* [x] Node.js backend
+* [x] Express API foundation
+* [x] MySQL integration
+* [x] Database connectivity
+* [x] Project planning data model
+* [x] Initial project persistence foundation
+
+### In Progress
+
+* [ ] Complete blueprint persistence
+* [ ] Saved projects dashboard
+* [ ] Project search and filtering
+* [ ] Improved project validation
+* [ ] Cloud deployment
+
+### Planned
+
+* [ ] AI-powered project planning
+* [ ] Automatic database schema generation
+* [ ] API endpoint recommendations
+* [ ] Development roadmap generation
+* [ ] Authentication
+* [ ] Project blueprint export
+* [ ] Project workspace
+* [ ] AI-assisted development features
 
 ---
 
-## 🎯 What Makes ProjectForge Different?
+## 🎯 Design Philosophy
 
-ProjectForge focuses on the **transition between an idea and implementation**.
+ProjectForge focuses on the transition between an idea and implementation.
 
-The product is not simply:
-
-```text
-Idea → AI Answer
-```
-
-It aims to become:
+The core workflow is:
 
 ```text
 Idea
@@ -455,7 +495,9 @@ Tasks
 Development
 ```
 
-That makes the project useful as both a **developer tool** and a foundation for future AI-assisted software development.
+The objective is not simply to generate an answer to a project idea.
+
+It is to create a **structured starting point for building the project**.
 
 ---
 
@@ -463,16 +505,18 @@ That makes the project useful as both a **developer tool** and a foundation for 
 
 ProjectForge demonstrates practical experience with:
 
-- Full-stack web development
-- REST API fundamentals
-- Node.js and Express
-- MySQL database integration
-- CRUD-oriented application design
-- Frontend/backend communication
-- Environment variables
-- Git and GitHub workflow
-- Product-oriented UI design
-- Designing an application with future AI integration in mind
+* Full-stack web development
+* Frontend development
+* REST API fundamentals
+* Node.js and Express.js
+* MySQL database integration
+* CRUD-oriented application design
+* Frontend/backend communication
+* Environment variables
+* Git and GitHub workflow
+* Product-oriented UI design
+* Database-backed applications
+* Designing systems with future AI integration in mind
 
 ---
 
@@ -480,13 +524,13 @@ ProjectForge demonstrates practical experience with:
 
 **Surabhi**
 
-Built as a hands-on full-stack project focused on turning software ideas into structured, actionable development plans.
+ProjectForge is a hands-on full-stack project focused on transforming software ideas into structured and actionable development plans.
 
 ---
 
-## ⭐ If You Like ProjectForge
+## ⭐ Support
 
-If this project is useful or interesting, consider giving the repository a ⭐ on GitHub.
+If you find ProjectForge useful or interesting, consider giving the repository a ⭐ on GitHub.
 
 ---
 
